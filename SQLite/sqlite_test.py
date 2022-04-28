@@ -24,4 +24,5 @@ cur.execute("INSERT INTO Users VALUES ('calebkirkland','Caleb','Kirkland','cok18
 connection.commit()
 connection.close()
 
+# ALL INFO ABOUT SQLITE INTERFACING WITH PYTHON CAN BE FOUND HERE: https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor
 # DRAG AND DROP THE DB FILES HERE: https://inloop.github.io/sqlite-viewer/ TO VIEW THEM
