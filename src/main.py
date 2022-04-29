@@ -21,7 +21,7 @@ def welcome_screen():
 def log_in():
     username_input = input("Enter your username: ")
     password_input = input("Enter your password: ")
-    # #TO DO: CONNECT TO THE DATABASE AND CHECK INPUT
+    # TO DO: AUTHENTICATE INPUT FROM THE DB
 
     # cursor.execute("SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
     # if cursor.rowcount:
