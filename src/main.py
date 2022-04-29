@@ -80,8 +80,7 @@ def main():
     menu_selection = print_menu()
 
     if menu_selection == '1':
-        #os.system('cls' if os.name == 'nt' else 'clear')
-        print("Works")
+        os.system('cls' if os.name == 'nt' else 'clear')
         ##TO DO: ACCOUNT INFO
     elif menu_selection == '2':
         os.system('cls' if os.name == 'nt' else 'clear')
