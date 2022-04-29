@@ -19,19 +19,21 @@ def welcome_screen():
     return selection
 
 def log_in():
-    username = input("Enter your username: ")
+    username_input = input("Enter your username: ")
     password = input("Enter your password: ")
-    #TO DO: CONNECT TO THE DATABASE
+    ##TO DO: CONNECT TO THE DATABASE AND CHECK INPUT
+
+    #
 
     return
 
 def create_account():
     username = input("Enter your username: ")
-    # TO DO: CHECK IF USERNAME EXISTS
+    ##TO DO: CHECK IF USERNAME EXISTS
     first_name = input("Enter your first name: ")
     last_name = input("Enter your last name: ")
     email = input("Enter your email address: ")
-    # TO DO: CHECK IF EMAIL EXISTS
+    ##TO DO: CHECK IF EMAIL EXISTS
     password = input("Enter your password: ")
     print("What is your shipping address?: ")
     street = input("\tEnter your house address and street: ")
@@ -76,15 +78,14 @@ def main():
     if menu_selection == '1':
         os.system('cls' if os.name == 'nt' else 'clear')
         print("Works")
-        # TO DO: ACCOUNT INFO
+        ##TO DO: ACCOUNT INFO
     elif menu_selection == '2':
         os.system('cls' if os.name == 'nt' else 'clear')
-        # TO DO: CART INFO
+        ##TO DO: CART INFO
     elif menu_selection == '3':
         os.system('cls' if os.name == 'nt' else 'clear')
-        # TO DO: INVENTORY INFO
+        ##TO DO: INVENTORY INFO
 
-        
     # Commiting the changes to the database (be careful!)
     connection.commit()
     # Closing the connection
