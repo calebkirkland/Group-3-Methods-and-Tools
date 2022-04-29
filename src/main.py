@@ -55,7 +55,7 @@ def create_account():
                 city text,
                 state text,
                 zip text)''')
-
+    # TO DO : MAKE SURE THAT ACCOUND DOESNT ALREADY EXIST (CHECK THE DB)
     cursor.execute("INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name, last_name, email, password, street, city, state, zip_code))
     print("Account created!")
 
