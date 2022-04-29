@@ -1,6 +1,12 @@
 import sqlite3
 import os
 
+# Importing the class files
+from Inventory import Inventory
+import Cart
+import Item
+import User
+
 # Connecting to our database and creating the cursor object
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
@@ -46,15 +52,15 @@ def create_account():
     zip_code = input("\tEnter your zip code: ")
 
     cursor.execute('''CREATE TABLE IF NOT EXISTS Users
-               (username text,
-                first_name text, 
-                last_name text, 
-                email text, 
-                password text,
-                street text,
-                city text,
-                state text,
-                zip text)''')
+               (username TEXT,
+                first_name TEXT, 
+                last_name TEXT, 
+                email TEXT, 
+                password TEXT,
+                street TEXT,
+                city TEXT,
+                state TEXT,
+                zip TEXT)''')
     # TO DO : MAKE SURE THAT ACCOUND DOESNT ALREADY EXIST (CHECK THE DB)
     cursor.execute("INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name, last_name, email, password, street, city, state, zip_code))
     print("Account created!")
@@ -87,7 +93,8 @@ def main():
         ##TO DO: CART INFO
     elif menu_selection == '3':
         os.system('cls' if os.name == 'nt' else 'clear')
-        ##TO DO: INVENTORY INFO
+        inventory1 = Inventory()
+        inventory1.add_item("101010", "Sample Item", 999)
 
     # Commiting the changes to the database (be careful!)
     connection.commit()
