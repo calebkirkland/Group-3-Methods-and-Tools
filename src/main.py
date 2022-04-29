@@ -20,10 +20,14 @@ def welcome_screen():
 
 def log_in():
     username_input = input("Enter your username: ")
-    password = input("Enter your password: ")
-    ##TO DO: CONNECT TO THE DATABASE AND CHECK INPUT
+    password_input = input("Enter your password: ")
+    # #TO DO: CONNECT TO THE DATABASE AND CHECK INPUT
 
-    #
+    # cursor.execute("SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
+    # if cursor.rowcount:
+    #     print("Found")
+    # else:
+    #     print("Not found")
 
     return
 
@@ -76,7 +80,7 @@ def main():
     menu_selection = print_menu()
 
     if menu_selection == '1':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        #os.system('cls' if os.name == 'nt' else 'clear')
         print("Works")
         ##TO DO: ACCOUNT INFO
     elif menu_selection == '2':
