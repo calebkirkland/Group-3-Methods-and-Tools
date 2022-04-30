@@ -2,14 +2,15 @@ import sqlite3
 import os
 
 # Importing the class files
-from Inventory import Inventory
+from inventory import Inventory
 import Cart
-import Item
-import User
+import item
+import user
 
 # Connecting to our database and creating the cursor object
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
+
 
 def welcome_screen():
     # Print the initial welcome Screen
@@ -24,18 +25,22 @@ def welcome_screen():
         selection = input("1.) Login\n2.) Create Account\n3.) Exit Program\nMake a selection (1, 2, or 3): ")
     return selection
 
+
 def log_in():
     username_input = input("Enter your username: ")
     password_input = input("Enter your password: ")
     # TO DO: AUTHENTICATE INPUT FROM THE DB
 
-    # cursor.execute("SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
-    # if cursor.rowcount:
-    #     print("Found")
-    # else:
-    #     print("Not found")
+    cursor.execute("SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
 
-    return
+    if not cursor.fetchone():  # An empty result evaluates to False.
+        print("Login failed")
+
+        return False
+    else:
+        print("Welcome")
+        return True
+
 
 def create_account():
     username = input("Enter your username: ")
@@ -62,25 +67,34 @@ def create_account():
                 state TEXT,
                 zip TEXT)''')
     # TO DO : MAKE SURE THAT ACCOUND DOESNT ALREADY EXIST (CHECK THE DB)
-    cursor.execute("INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name, last_name, email, password, street, city, state, zip_code))
+    cursor.execute(
+        "INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name,
+                                                                                         last_name, email, password,
+                                                                                         street, city, state, zip_code))
     print("Account created!")
 
+
 def print_menu():
-    selection = input("1.) Account Information\n2.) Cart Information\n 3.)Inventory Information\nMake a selection (1, 2, or 3): ")
+    selection = input(
+        "1.) Account Information\n2.) Cart Information\n 3.)Inventory Information\nMake a selection (1, 2, or 3): ")
     return selection
+
+
+
 
 def main():
     # Printing the welcome screen and taking input
-    welcome_selection = welcome_screen()
-
-    if welcome_selection == '1':
-        os.system('cls' if os.name == 'nt' else 'clear') # Clearing the screen for the next menu
-        log_in()
-    elif welcome_selection == '2':
-        os.system('cls' if os.name == 'nt' else 'clear')
-        create_account()
-    elif welcome_selection == '3':
-        exit() # Exit the Program
+    log = False
+    while (log != True):
+        welcome_selection = welcome_screen()
+        if welcome_selection == '1':
+            os.system('cls' if os.name == 'nt' else 'clear')  # Clearing the screen for the next menu
+            log = log_in()
+        elif welcome_selection == '2':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            create_account()
+        elif welcome_selection == '3':
+            exit()  # Exit the Program
 
     # Printing the menu and taking input
     menu_selection = print_menu()
@@ -100,6 +114,7 @@ def main():
     connection.commit()
     # Closing the connection
     connection.close()
+
 
 if __name__ == "__main__":
     main()
