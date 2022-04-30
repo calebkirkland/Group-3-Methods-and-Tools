@@ -43,12 +43,48 @@ def log_in():
 
 
 def create_account():
+    ##Checks if username is in use
     username = input("Enter your username: ")
-    ##TO DO: CHECK IF USERNAME EXISTS
+    cursor.execute("SELECT * FROM 'Users' WHERE username = '{}'".format(username))
+
+    if not cursor.fetchone():  # An empty result evaluates to False.
+        check = False
+    else:
+        check = True
+
+    while check == True:
+        username = input("Username Already Taken\nEnter your username: ")
+        cursor.execute("SELECT * FROM 'Users' WHERE username = '{}'".format(username))
+        if not cursor.fetchone():  # An empty result evaluates to False.
+            check = False
+            break
+        else:
+            check = True
+
+
     first_name = input("Enter your first name: ")
     last_name = input("Enter your last name: ")
+
+    ##CHECK IF EMAIL EXISTS
+
     email = input("Enter your email address: ")
-    ##TO DO: CHECK IF EMAIL EXISTS
+    cursor.execute("SELECT * FROM 'Users' WHERE email = '{}'".format(email))
+    if not cursor.fetchone():  # An empty result evaluates to False.
+        check = False
+
+    else:
+        check = True
+
+    while check == True:
+        email = input("That email is already in use\nEnter your email address: ")
+        cursor.execute("SELECT * FROM 'Users' WHERE email = '{}'".format(email))
+        if not cursor.fetchone():  # An empty result evaluates to False.
+            check = False
+            break
+        else:
+            check = True
+
+
     password = input("Enter your password: ")
     print("What is your shipping address?: ")
     street = input("\tEnter your house address and street: ")
