@@ -182,8 +182,32 @@ def edit_inventory():
             ##Logout
             return
 
+def edit_userInfoMenu():
+    selection = input(
+        "1.)View All Users\n2.)Add User \n3.)Edit User \n4.)Delete User\n5.)Back  \nMake a selection (1-5): ")
+    return selection
 
+def edit_userInfo():
+    select_userinfo = edit_userInfoMenu()
 
+    user1 = User()
+    loop = 0
+    ##while loop == '0':
+    if select_userinfo == '1':
+        user1.display_allUsers()
+    elif select_userinfo == '2':
+        create_account()
+    elif select_userinfo == '3':
+        username = input("What user would you like to change?: ")
+        change = input("What do you want to change?\n1.)Username\n 2.)First Name\n 3.)Last Name\n 4.)Email\n 5.)Password\n6.)Street\n7.)City\n8.)State\n9.)Zip\nMake a selection 1-9: ")
+        changeTo = input("What would you like that changed to?: ")
+
+        user1.account_change(change, changeTo, username)
+
+    elif select_userinfo == '4':
+
+        username = input("Enter Username: ")
+        user1.delete_user(username)
 
 def main():
     # Printing the welcome screen and taking input
@@ -207,6 +231,7 @@ def main():
     logout = False
     while logout == False:
         os.system('cls' if os.name == 'nt' else 'clear')
+
         if admin == True:
             menu_selection = print_adminMenu()
             if menu_selection == '1':
@@ -221,6 +246,8 @@ def main():
             elif menu_selection == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##TO DO: User information
+                edit_userInfo()
+
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##Edit Inventory

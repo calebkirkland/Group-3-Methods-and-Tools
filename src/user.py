@@ -165,6 +165,14 @@ class User:
             # Closing the connection
             users_connection.close()
 
+    def display_allUsers(self):
+
+        cursor.execute("SELECT * FROM Users ORDER BY username")
+
+        user = cursor.fetchall()
+        print("Username |  First |    Last  |    Email         |  Pass |    Address |    City |  State  |  Zip  |  Admin ")
+        for row in user:
+            print(row, "\n")
 ##def AddToHistory():
 ##cursor.execute()
 ## '''INSERT INTO History(username, first_name, last_name, email, password, street, city, state, zip_code)
