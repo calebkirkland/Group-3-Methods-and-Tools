@@ -161,27 +161,47 @@ def account_info(username):
 
 def edit_inventoryMenu():
     selection = input(
-        "1.)Remove Item \n2.)Edit Item \n3.)Edit Inventory \n4.)Back  \nMake a selection (1, 2, 3, or 4): ")
+        "1.)Remove Item \n2.)Add Item \n3.)Edit Item \n4.)Display Inventory \n5.)Back  \nMake a selection (1, 2, 3, or 4): ")
     return selection
 
 def edit_inventory():
     select_inventory = edit_inventoryMenu()
+    inventory1 = Inventory()
 
-    while(select_inventory != 4):
-        if select_inventory == '1':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ##TO DO: Account Information 3.)User information \n 3.)Edit Inventory \n4.)Logout
-        elif select_inventory == '2':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ##TO DO: User information
-        elif select_inventory == '3':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ##Edit Inventory
-        elif select_inventory == '4':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ##Logout
-            return
 
+    if select_inventory == '1':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##To DO: Remove
+        id = input("Input Item ID for the Item you want to remove: ")
+        inventory1.delete_item(id)
+
+    elif select_inventory == '2':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##TO DO: Edit Item
+        item_id = input("Input the Item ID: ")
+        item_name = input("Input the Item Name: ")
+        remaining_stock = input("Input the Stock: ")
+
+        inventory1.add_item(item_id, item_name, remaining_stock)
+
+    elif select_inventory == '3':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##Edit Inventory
+
+        item_id = input("Enter the ID of the item you want to edit: ")
+        choice = input("What do you want to change?\n1.)Item ID\n2.)Item Name\n3.)Stock\nMake a selection 1-3: ")
+        changeto = input("What do you want it to change to?: ")
+
+        inventory1.update_partialItem(item_id, choice, changeto)
+
+    elif select_inventory == '4':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        inventory1.show_inventory()
+
+    elif select_inventory == '5':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##Logout
+        return
 def edit_userInfoMenu():
     selection = input(
         "1.)View All Users\n2.)Add User \n3.)Edit User \n4.)Delete User\n5.)Back  \nMake a selection (1-5): ")
@@ -251,7 +271,7 @@ def main():
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##Edit Inventory
-                edit_inventoryMenu()
+                edit_inventory()
 
             elif menu_selection == '4':
                 os.system('cls' if os.name == 'nt' else 'clear')

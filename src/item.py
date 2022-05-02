@@ -42,3 +42,5 @@ class Item:
         item_connection.commit()
         # Closing the connection
         item_connection.close()
+
+
