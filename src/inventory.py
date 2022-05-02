@@ -9,7 +9,6 @@ class Inventory:
                (item_id TEXT,
                 item_name TEXT, 
                 remaining_stock REAL)''')
-            print("Inventory Table created")
 
     def add_item(self, item_id, item_name, remaining_stock):
         cursor.execute("INSERT INTO Inventory VALUES ('{}','{}','{}')".format(item_id, item_name, remaining_stock))
@@ -18,3 +17,11 @@ class Inventory:
         inventory_connection.commit()
         # Closing the connection
         inventory_connection.close()
+
+    def show_inventory(self):
+        cursor.execute("SELECT * FROM 'Inventory' ORDER BY item_name")
+
+        table = cursor.fetchall()
+        print("Item ID    Item Name     Stock")
+        for row in table:
+            print(row, "          ", "\n")

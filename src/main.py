@@ -4,7 +4,7 @@ import os
 # Importing the class files
 from inventory import Inventory
 import Cart
-import item
+from item import Item
 from user import User
 
 # Connecting to our database and creating the cursor object
@@ -37,19 +37,19 @@ def log_in():
     if not cursor.fetchone():  # An empty result evaluates to False.
         print("Login failed")
 
-        return False, False
+        return False, False, ""
     else:
         cursor.execute("SELECT admin FROM 'Users' WHERE username = '{}'".format(username_input))
-        admin = cursor.fetchone()
-
-        if admin == ('True',):  # An empty result evaluates to False.
+        a = cursor.fetchone()
+        username = username_input
+        if a == ('True',):  # An empty result evaluates to False.
             print("Welcome Admin")
 
-            return True, True
+            return True, True, username
         else:
             print("Welcome")
 
-            return True, False
+            return True, False, username
 
 
 def create_account():
@@ -119,21 +119,84 @@ def print_menu():
 
 def print_adminMenu():
     selection = input(
-        "1.)Account Information 3.)User information \n 3.)Edit Inventory \n4.)Logout  \nMake a selection (1, 2, 3, or 4): ")
+        "1.)Account Information \n2.)User information \n3.)Edit Inventory \n4.)Logout  \nMake a selection (1, 2, 3, or 4): ")
     return selection
+
+def account_infoMenu():
+    selection = input(
+        "1.) View account info\n 2.)Edit info\n 3.)Delete Account \n4.)Back\nMake a selection (1, 2, 3, or 4):  ")
+    return selection
+
+def account_info(username):
+    user1 = User()
+
+    out = 0
+
+    select_info = account_infoMenu()
+    if select_info == '1':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##Display account
+        user1.account_info(username)
+        return False
+
+    elif select_info == '2':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ##TO DO: User information
+
+        choice = input("1.)Username\n 2.)First Name\n 3.)Last Name\n 4.)Email\n 5.)Password\n6.)Street\n7.)City\n8.)State\n9.)Zip\nMake a selection 1-9: ")
+        changeTo = input("What do you want it to change to?: ")
+
+        user1.account_change(choice, changeTo, username)
+        print("Log back in to see changes!")
+        return True
+
+    elif select_info == '3':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        user1.delete_user(username)
+        return True
+
+    elif select_info == '4':
+        os.system('cls' if os.name == 'nt' else 'clear')
+        return False
+
+def edit_inventoryMenu():
+    selection = input(
+        "1.)Remove Item \n2.)Edit Item \n3.)Edit Inventory \n4.)Back  \nMake a selection (1, 2, 3, or 4): ")
+    return selection
+
+def edit_inventory():
+    select_inventory = edit_inventoryMenu()
+
+    while(select_inventory != 4):
+        if select_inventory == '1':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            ##TO DO: Account Information 3.)User information \n 3.)Edit Inventory \n4.)Logout
+        elif select_inventory == '2':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            ##TO DO: User information
+        elif select_inventory == '3':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            ##Edit Inventory
+        elif select_inventory == '4':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            ##Logout
+            return
+
+
 
 
 def main():
     # Printing the welcome screen and taking input
     log = False  ##Check for T/F if user was able to log in
     admin = False  ##Check for if user is an admin
+    username = ""
     ##leave = False  ##Loops menu till exited
     os.system('cls' if os.name == 'nt' else 'clear')
     while (log != True):
         welcome_selection = welcome_screen()
         if welcome_selection == '1':
             os.system('cls' if os.name == 'nt' else 'clear')  # Clearing the screen for the next menu
-            log, admin = log_in()
+            log, admin, username = log_in()
         elif welcome_selection == '2':
             os.system('cls' if os.name == 'nt' else 'clear')
             create_account()
@@ -144,35 +207,53 @@ def main():
     logout = False
     while logout == False:
         os.system('cls' if os.name == 'nt' else 'clear')
-        if admin == ('True',):
+        if admin == True:
             menu_selection = print_adminMenu()
-
             if menu_selection == '1':
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ##TO DO: ACCOUNT INFO
+                ##TO DO: Account Information
+                deleted = False
+                deleted = account_info(username)
+
+                if deleted:
+                    break
+
             elif menu_selection == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ##TO DO: CART INFO
+                ##TO DO: User information
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
+                ##Edit Inventory
+                edit_inventoryMenu()
+
             elif menu_selection == '4':
                 os.system('cls' if os.name == 'nt' else 'clear')
-                logout = True
+                ##Logout
+                break
         else:
             menu_selection = print_menu()
 
             if menu_selection == '1':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##TO DO: ACCOUNT INFO
-                break
+                deleted = False
+                deleted = account_info(username)
+
+                if deleted:
+                    break
             elif menu_selection == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##TO DO: CART INFO
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
+                inventory1 = Inventory()
+                ##shows inventory
+                inventory1.show_inventory()
+
             elif menu_selection == '4':
                 os.system('cls' if os.name == 'nt' else 'clear')
-                logout = True
+                ##logsout
+                break
 
     ##Bad way to repeat function, but can we fixed later
     main()
