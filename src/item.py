@@ -27,7 +27,7 @@ class Item:
         
         # do not know how we should do prices.
         
-        print("Item Removed!)
+        print("Item Removed!")
         # Commiting the changes to the database (be careful!)
         item_connection.commit()
         # Closing the connection
@@ -37,7 +37,7 @@ class Item:
         
         # not sure what to add here yet for updating the cart..
         
-        print("Item Updated!)
+        print("Item Updated!")
         # Commiting the changes to the database (be careful!)
         item_connection.commit()
         # Closing the connection

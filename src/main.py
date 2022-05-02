@@ -5,7 +5,7 @@ import os
 from inventory import Inventory
 import Cart
 import item
-import user
+from user import User
 
 # Connecting to our database and creating the cursor object
 connection = sqlite3.connect('database.db')
@@ -31,15 +31,25 @@ def log_in():
     password_input = input("Enter your password: ")
     # TO DO: AUTHENTICATE INPUT FROM THE DB
 
-    cursor.execute("SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
+    cursor.execute(
+        "SELECT * FROM 'Users' WHERE username = '{}' AND password = '{}'".format(username_input, password_input))
 
     if not cursor.fetchone():  # An empty result evaluates to False.
         print("Login failed")
 
-        return False
+        return False, False
     else:
-        print("Welcome")
-        return True
+        cursor.execute("SELECT admin FROM 'Users' WHERE username = '{}'".format(username_input))
+        admin = cursor.fetchone()
+
+        if admin == ('True',):  # An empty result evaluates to False.
+            print("Welcome Admin")
+
+            return True, True
+        else:
+            print("Welcome")
+
+            return True, False
 
 
 def create_account():
@@ -60,7 +70,6 @@ def create_account():
             break
         else:
             check = True
-
 
     first_name = input("Enter your first name: ")
     last_name = input("Enter your last name: ")
@@ -84,7 +93,6 @@ def create_account():
         else:
             check = True
 
-
     password = input("Enter your password: ")
     print("What is your shipping address?: ")
     street = input("\tEnter your house address and street: ")
@@ -92,65 +100,82 @@ def create_account():
     state = input("\tEnter your state: ")
     zip_code = input("\tEnter your zip code: ")
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Users
-               (username TEXT,
-                first_name TEXT, 
-                last_name TEXT, 
-                email TEXT, 
-                password TEXT,
-                street TEXT,
-                city TEXT,
-                state TEXT,
-                zip TEXT)''')
-    # TO DO : MAKE SURE THAT ACCOUND DOESNT ALREADY EXIST (CHECK THE DB)
-    cursor.execute(
-        "INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name,
-                                                                                         last_name, email, password,
-                                                                                         street, city, state, zip_code))
-    print("Account created!")
+    adminCheck = input("Enter admin code or type 1: ")
+
+    if adminCheck == "1010":
+        admin = True
+    else:
+        admin = False
+
+    user1 = User()
+    user1.add_user(username, first_name, last_name, email, password, street, city, state, zip_code, admin)
 
 
 def print_menu():
     selection = input(
-        "1.) Account Information\n2.) Cart Information\n 3.)Inventory Information\nMake a selection (1, 2, or 3): ")
+        "1.) Account Information\n2.) Cart Information\n3.)Inventory Information \n4.)Logout \nMake a selection (1, 2, 3, or 4): ")
     return selection
 
 
+def print_adminMenu():
+    selection = input(
+        "1.)Account Information 3.)User information \n 3.)Edit Inventory \n4.)Logout  \nMake a selection (1, 2, 3, or 4): ")
+    return selection
 
 
 def main():
     # Printing the welcome screen and taking input
-    log = False
+    log = False  ##Check for T/F if user was able to log in
+    admin = False  ##Check for if user is an admin
+    ##leave = False  ##Loops menu till exited
+    os.system('cls' if os.name == 'nt' else 'clear')
     while (log != True):
         welcome_selection = welcome_screen()
         if welcome_selection == '1':
             os.system('cls' if os.name == 'nt' else 'clear')  # Clearing the screen for the next menu
-            log = log_in()
+            log, admin = log_in()
         elif welcome_selection == '2':
             os.system('cls' if os.name == 'nt' else 'clear')
             create_account()
         elif welcome_selection == '3':
-            exit()  # Exit the Program
+            exit()
 
     # Printing the menu and taking input
-    menu_selection = print_menu()
-
-    if menu_selection == '1':
+    logout = False
+    while logout == False:
         os.system('cls' if os.name == 'nt' else 'clear')
-        ##TO DO: ACCOUNT INFO
-    elif menu_selection == '2':
-        os.system('cls' if os.name == 'nt' else 'clear')
-        ##TO DO: CART INFO
-    elif menu_selection == '3':
-        os.system('cls' if os.name == 'nt' else 'clear')
-        inventory1 = Inventory()
-        inventory1.add_item("101010", "Sample Item", 999)
+        if admin == ('True',):
+            menu_selection = print_adminMenu()
 
-    # Commiting the changes to the database (be careful!)
-    connection.commit()
-    # Closing the connection
-    connection.close()
+            if menu_selection == '1':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ##TO DO: ACCOUNT INFO
+            elif menu_selection == '2':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ##TO DO: CART INFO
+            elif menu_selection == '3':
+                os.system('cls' if os.name == 'nt' else 'clear')
+            elif menu_selection == '4':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                logout = True
+        else:
+            menu_selection = print_menu()
 
+            if menu_selection == '1':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ##TO DO: ACCOUNT INFO
+                break
+            elif menu_selection == '2':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ##TO DO: CART INFO
+            elif menu_selection == '3':
+                os.system('cls' if os.name == 'nt' else 'clear')
+            elif menu_selection == '4':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                logout = True
+
+    ##Bad way to repeat function, but can we fixed later
+    main()
 
 if __name__ == "__main__":
     main()
