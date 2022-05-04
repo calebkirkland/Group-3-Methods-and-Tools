@@ -235,7 +235,7 @@ def main():
     admin = False  ##Check for if user is an admin
     username = ""
     ##leave = False  ##Loops menu till exited
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
     while (log != True):
         welcome_selection = welcome_screen()
         if welcome_selection == '1':

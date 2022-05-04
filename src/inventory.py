@@ -19,12 +19,20 @@ class Inventory:
         inventory_connection.close()
 
     def show_inventory(self):
-        cursor.execute("SELECT * FROM 'Inventory' ORDER BY item_name")
+        cursor.execute("SELECT * FROM Inventory ORDER BY item_name")
 
-        table = cursor.fetchall()
-        print("Item ID    Item Name     Stock")
-        for row in table:
-            print(row, "          ", "\n")
+        # table = 
+        print(cursor.fetchall())
+        # print("Item ID    Item Name     Stock")
+        # for row in table:
+        #     print(row, "          ", "\n")
+
+
+        userInput = input("What item would you like to add to your cart? (enter Item ID or type 'None' to exit): ")
+        if userInput != "none":
+            #update the amount remaining
+            return
+
 
 
     def update_partialItem(self, id, choice, changeto):
