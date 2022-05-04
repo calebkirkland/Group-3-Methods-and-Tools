@@ -5,7 +5,8 @@ cursor = users_connection.cursor()
 
 
 class User:
-    def __init__(self):
+    def __init__(self, username):
+        self.name = username
         cursor.execute('''CREATE TABLE IF NOT EXISTS User
                (username TEXT,
                 first_name TEXT, 
@@ -17,6 +18,10 @@ class User:
                 state TEXT, 
                 zip_code TEXT
                 admin BOOL)''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS {}Cart
+                (item_id TEXT,
+                item_name TEXT,
+                reamaining_stock REAL)'''.format(self.name))
 
     def add_user(self, username, first_name, last_name, email, password, street, city, state, zip_code, admin):
 
@@ -27,6 +32,7 @@ class User:
                                                                                                   street, city, state,
                                                                                                   zip_code, admin))
         print("Account Created")
+
         # Commiting the changes to the database (be careful!)
         users_connection.commit()
         # Closing the connection
@@ -42,6 +48,19 @@ class User:
         # print("Username |  First |    Last  |    Email         |  Pass |    Address |    City |  State  |  Zip  |  Admin ")
         # for row in acc:
         #     print(row, "\n")
+
+    def print_cart(self):
+        cursor.execute("Select * FROM {}Cart".format(self.name))
+        print(cursor.fetchall())
+        userInput = input("\nPress <enter> to exit")
+
+    def add_to_user_cart(self, item):
+        cursor.execute(
+        #"INSERT INTO {}Cart VALUES ('{}','{}','{}')".format(username # add item)
+        )
+        
+
+
 
 ##constructor/destructor (delete account)
 ##delete data
@@ -176,6 +195,11 @@ class User:
         for row in user:
             print(row, "\n")
         userInput = input("\nPress any key to exit")
+
+
+    
+
+
 ##def AddToHistory():
 ##cursor.execute()
 ## '''INSERT INTO History(username, first_name, last_name, email, password, street, city, state, zip_code)

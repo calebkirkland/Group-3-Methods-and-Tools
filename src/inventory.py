@@ -30,9 +30,11 @@ class Inventory:
 
         userInput = input("What item would you like to add to your cart? (enter Item ID or type 'None' to exit): ")
         if userInput != "none":
-            #update the amount remaining
-            return
-
+            
+            selectedItem = cursor.execute("SELECT * FROM Inventory WHERE item_id = {}".format(userInput))
+            return userInput
+        else:
+            return "none"
 
 
     def update_partialItem(self, id, choice, changeto):

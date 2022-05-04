@@ -291,11 +291,17 @@ def main():
             elif menu_selection == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##TO DO: CART INFO
+                user1 = User(username)
+                user1.print_cart()
+                
+                
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 inventory1 = Inventory()
                 ##shows inventory
-                inventory1.show_inventory()
+                selection_id = inventory1.show_inventory()
+                user1 = User(username)
+                user1.add_to_user_cart(selection_id)
 
             elif menu_selection == '4':
                 os.system('cls' if os.name == 'nt' else 'clear')
