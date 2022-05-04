@@ -21,7 +21,7 @@ class User:
     def add_user(self, username, first_name, last_name, email, password, street, city, state, zip_code, admin):
 
         cursor.execute(
-            "INSERT INTO Users @VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name,
+            "INSERT INTO Users VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(username, first_name,
                                                                                                   last_name, email,
                                                                                                   password,
                                                                                                   street, city, state,
