@@ -28,7 +28,7 @@ class Inventory:
         #     print(row, "          ", "\n")
 
 
-        userInput = input("What item would you like to add to your cart? (enter Item ID or type 'None' to exit): ")
+        userInput = input("What item would you like to add to your cart? (enter Item ID or type 'none' to exit): ")
         if userInput != "none":
             
             selectedItem = cursor.execute("SELECT * FROM Inventory WHERE item_id = {}".format(userInput))

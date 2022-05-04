@@ -107,7 +107,7 @@ def create_account():
     else:
         admin = False
 
-    user1 = User()
+    user1 = User(username)
     user1.add_user(username, first_name, last_name, email, password, street, city, state, zip_code, admin)
 
 
@@ -128,7 +128,7 @@ def account_infoMenu():
     return selection
 
 def account_info(username):
-    user1 = User()
+    user1 = User(username)
 
     out = 0
 
@@ -207,10 +207,10 @@ def edit_userInfoMenu():
         "1.)View All Users\n2.)Add User \n3.)Edit User \n4.)Delete User\n5.)Back  \nMake a selection (1-5): ")
     return selection
 
-def edit_userInfo():
-    select_userinfo = edit_userInfoMenu()
+def edit_userInfo(username):
+    select_userinfo = edit_userInfoMenu(username)
 
-    user1 = User()
+    user1 = User(username)
     loop = 0
     ##while loop == '0':
     if select_userinfo == '1':
@@ -266,7 +266,7 @@ def main():
             elif menu_selection == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ##TO DO: User information
-                edit_userInfo()
+                edit_userInfo(username)
 
             elif menu_selection == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
